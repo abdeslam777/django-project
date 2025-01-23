@@ -1,0 +1,33 @@
+{% extends 'offer/base.html' %}
+{% block content %}
+<h1 style="color: #007BFF;">Project Watchlist</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Watchlist</title>
+</head>
+<body>
+    <h1>{{ user.username }}'s Watchlist</h1>
+    <a href="{% url 'offer_list' %}">Back to Offers</a>
+    <hr>
+    {% if watchlist_offers %}
+        {% for offer in watchlist_offers %}
+            <div class="offer-card">
+                <h2><a href="{% url 'offer_detail' offer.id %}">{{ offer.title }}</a></h2>
+                <p>{{ offer.description|truncatewords:30 }}</p>
+                <p class="offer-meta"><strong>Supervisor:</strong> <a href="">{{ offer.supervisor }}</a></p>
+                
+            </div>
+            <div>
+                <a href="">Delete</a>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Your watchlist is empty.</p>
+    {% endif %}
+</body>
+</html>
+
+
+{% endblock %}

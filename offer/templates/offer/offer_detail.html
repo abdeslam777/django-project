@@ -1,0 +1,94 @@
+{% extends 'offer/base.html' %}
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ offer.title }}</title>
+    <style>
+        body {
+            /* font-family: "Lato", Helvetica, Arial, sans-serif;
+            font-style: normal; */
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .offer-detail {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        a{
+            color: #007BFF;
+        }
+        .btn-applay a{
+            color: white;
+            text-decoration: none;
+        }
+        .btn-applay{
+            display: block;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #fff;
+            background: #007BFF;
+            padding: 8px 20px;
+            border-radius: 8px;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            border: none;
+            cursor: pointer;
+        
+        }
+        .btn-applay:hover{
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="offer-detail">
+        <h1>{{ offer.title }}</h1>
+        <p>{{ offer.description }}</p>
+        <p><strong>Supervisor:</strong> <a href=""> {{ offer.supervisor }}</a></p>
+        <p><strong>Skills Required:</strong> {{ offer.skills_required }}</p>
+        <p><strong>Duration:</strong> {{ offer.duration }} months</p>
+        <p><strong>Posted on:</strong> {{ offer.created_at|date:"d M Y" }}</p>
+        <p><strong>Last Updated:</strong> {{ offer.updated_at|date:"d M Y" }}</p>
+        <a href="{% url 'offer_list' %}" class="back-link">Back to Offers List</a>
+
+        {% if offer.is_active  %}
+            <button class="btn-applay"><a href="{% url 'apply_offer' offer.id %}">APPLAY OFFER</a> </button>
+        {% else %}
+        <p>This offer is closed. Applications are no longer accepted.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}

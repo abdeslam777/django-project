@@ -1,0 +1,127 @@
+{% extends 'offer/base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Offer</title>
+    
+</head>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.offer-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.offer-form label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+    margin-top: 12px;
+}
+
+.offer-form input,
+.offer-form textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.offer-form input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.offer-form button {
+    background-color: #5c6bc0;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+}
+
+.offer-form button:hover {
+    background-color: #3f51b5;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+</style>
+<body>
+    <div class="form-container">
+        <h1>Create an Offer</h1>
+        <form action="" method="POST" class="offer-form">
+            {% csrf_token %}
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="supervisor">Supervisor</label>
+            <input type="text" id="supervisor" name="supervisor" required>
+
+            <label for="skills">Skills Required</label>
+            <input type="text" id="skills" name="skills_required" required>
+
+            <label for="duration">Duration (months)</label>
+            <input type="number" id="duration" name="duration" required>
+
+            <div class="form-group">
+                <label for="is_active">Activate Offer</label>
+                <input type="checkbox" id="is_active" name="is_active">
+            </div>
+
+            <button type="submit">Create Offer</button>
+            <button ><a href="{% url 'offer_list' %}" class="btn btn-secondary">Cancel</a></button>
+        </form>
+    </div>
+</body>
+</html>
+
+{% endblock %}
+
+
+<!-- <div class="form-container">
+    <h1>Create Offer</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create Offer</button>
+    </form>
+    <a href="{% url 'offer_list' %}" class="btn btn-secondary">Cancel</a>
+</div> -->

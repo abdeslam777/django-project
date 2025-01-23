@@ -1,0 +1,68 @@
+{% extends 'offer/base.html'%}
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submissions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        td a{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Submissions</h1>
+    <br>
+    <a href="{% url 'offer_list' %}" style="margin: 0px;">Back to projects List</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Offer Title</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Applied At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+                <tr>
+                    <td><a href="{% url 'offer_detail' application.offer.id %}">{{ application.offer.title }}</a></td>
+                    <td>{{ application.full_name }}</td>
+                    <td>{{ application.email }}</td>
+                    <td>{{ application.applied_at|timesince }} ago</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No applications found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    
+</body>
+</html>
+
+
+{% endblock %} 

@@ -1,0 +1,44 @@
+<!-- {% extends 'offer/base.html' %} -->
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    {% if page == 'login' %}
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>username:</label>
+        <input type="text" name="username" placeholder="Enter your username">
+
+        <label>password:</label>
+        <input type="password" name="password" placeholder="Enter password">
+
+        <input type="submit" value="Login">
+        <p>haven't signed up yet?</p>
+        <a href="{% url 'register' %}"> sign up</a>
+        <!-- <button type="submit"><a href="{% url 'offer' %}">Login</a></button> -->
+    </form>
+
+    {% else %}
+    <h2>Register</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register">
+        <p>Already signed up yet!</p>
+        <a href="{% url 'login' %}"></a>
+        <!-- <button type="submit"><a href="{% url 'offer' %}">Login</a></button> -->
+    </form>
+    {% endif %}
+
+   
+  
+</body>
+</html>
+
+{% endblock %}

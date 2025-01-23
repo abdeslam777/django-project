@@ -1,0 +1,143 @@
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Offer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="text"] {
+            padding: 10px;
+        }
+        #description{
+            padding: 40px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .form-group button {
+            background-color: #3498db;
+            color: white;
+            font-size: 1em;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+
+        .form-group button:hover {
+            background-color: #2980b9;
+        }
+
+        .form-group p {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        /* .error-message {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        } */
+        
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Apply for Offer</h1>
+        
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <label for="text">Description</label>
+                <input type="text" id="description" name="description" placeholder="Why you want this offer" required>
+            </div>
+            <!-- <div class="form-group">
+                <label for="cv">Upload CV</label>
+                <input type="file" id="cv" name="cv" accept=".pdf, .doc, .docx" required>
+            </div> -->
+            <div class="form-group">
+                <button type="submit">Submit Application</button>
+            </div>
+            <div class="form-group">
+                <button type="submit"><a style="color: white;text-decoration: none;" href="{% url 'offer_list' %}">Cancel</a></button>
+            </div>
+            <p>Make sure all the information is correct before submitting.</p>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

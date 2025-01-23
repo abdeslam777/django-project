@@ -1,0 +1,226 @@
+{% extends 'offer/base.html' %}
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .offer-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .offer-content {
+            max-width: 70%;
+        }
+
+        .offer-content h2 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #007BFF;
+        }
+
+        .offer-content p {
+            color: #555;
+            margin: 0 0 10px;
+            line-height: 1.6;
+        }
+
+        .offer-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .offer-actions {
+            text-align: right;
+            max-width: 25%;
+        }
+
+        .offer-actions button {
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .offer-actions button:hover {
+            background: #0056b3;
+        }
+
+        .offer-status {
+            display: inline-block;
+            font-size: 0.8rem;
+            color: #fff;
+            background: #28a745;
+            padding: 8px 16px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+
+        .offer-status.closed {
+            background: #dc3545;
+        }
+        .btn-create-offer{
+            display: inline-block;
+            font-size: 0.8rem;
+            color: #fff;
+            background: #007BFF;
+            padding: 11px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-create-offer:hover{
+            background: #0056b3;
+        }
+        .btn-create-offer a{
+            text-decoration: none;
+            color: white;
+        }
+        #btn_edit{
+            padding: 10px 30px;
+            display: inline-block;
+        }
+        #btn_edit a{
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+        }
+        button a {
+            text-decoration: none;
+            color: white;
+        }
+        .btn-app-list{
+            display: inline-block;
+            font-size: 0.8rem;
+            color: #007BFF;
+            background: none;
+            padding: 10px 40px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            /* border-style: groove; */
+            border: 0.5px solid #007BFF ;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .btn-app-list a{
+            color: #007BFF;
+        }
+        
+    </style>
+  
+</head>
+<body>
+    {% if request.user.is_superuser %}
+    <p style="color: #dc3545;">Hi, Admin {{ user.username }}</p>
+    {% endif %}
+
+    {% if supervisor_mode %}
+        <p style="color: #dc3545;">Hi, Teacher {{ user.username }}</p>
+    {% endif %}
+
+    {% if student_mode %}
+        <p style="color: #dc3545;">Hi, Student {{ user.username }}</p>
+    {% endif %}
+    <hr>
+
+    {% if query %}
+        <p>Search results for "{{ query }}": {{ filtered_offer_count }} offer(s) found.</p>
+    {% else %}
+        <p>Total offers: {{ filtered_offer_count }}</p>
+    {% endif %}
+
+    <h1>{{ count_offer }} Available Offers</h1>
+    <h3>{{ nbrOfferClosed }} Closed Offers</h3>
+
+    <!-- Supervisor-specific actions -->
+    {% if request.user.is_superuser %}
+        <button class="btn-app-list">
+            <a href="{% url 'application_list' %}">All Applications</a>
+        </button>
+
+    {% endif %}
+
+    {% if supervisor_mode %}
+        <button class="btn-create-offer">
+            <a href="{% url 'create-offer' %}">Create Offer</a>
+        </button>
+        <button class="btn-app-list">
+            <a href="{% url 'application_list' %}">All Applications</a>
+        </button>
+        
+    {% endif %}
+
+    {% if student_mode %}
+        <button class="btn-create-offer">
+            <a href="">Watchlist</a>
+        </button>
+        <button class="btn-app-list">
+            <a href="{% url 'application_list' %}">All Applications</a>
+        </button>
+    {% endif %}
+
+    <div>
+        {% for offer in offers %}
+        <div class="offer-card">
+            <div class="offer-content">
+                <h2><a href="{% url 'offer_detail' offer.id %}">{{ offer.title }}</a></h2>
+                <p>{{ offer.description|truncatewords:30 }}</p>
+                <p class="offer-meta"><strong>Supervisor:</strong> {{ offer.supervisor }}</p>
+                <p class="offer-meta"><strong>Duration:</strong> {{ offer.duration }} months</p>
+                <span class="offer-status {% if not offer.is_active %}closed{% endif %}">
+                    {% if offer.is_active %}OPEN{% else %}CLOSED{% endif %}
+                </span>
+            </div>
+
+            <div class="offer-actions">
+                <!-- Student-specific actions -->
+                {% if student_mode and offer.is_active %}
+                    <button>
+                        <a href="{% url 'apply_offer' offer.id %}">Apply</a>
+                    </button>
+                    <button><a href="">Add to Watchlist</a></button>
+                {% endif %}
+
+                <!-- Supervisor-specific actions -->
+                {% if supervisor_mode %}
+                    <button id="btn_edit">
+                        <a href="{% url 'update-offer' offer.id %}">Edit</a>
+                    </button>
+                    <button id="btn_delete">
+                        <a href="{% url 'delete-offer' offer.id %}">Delete</a>
+                    </button>
+                {% endif %}
+
+                <p>{{ offer.created_at|date:"d - M - Y" }}</p>
+                <p style="color:#555; font-size: 12px;">{{ offer.created_at|timesince }} ago </p>
+            </div>
+        </div>
+        {% empty %}
+        <p>No offers available at the moment.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
+
+{% endblock %}

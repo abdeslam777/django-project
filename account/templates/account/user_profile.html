@@ -1,0 +1,98 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+
+</head>
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* background-color: #f4f4f4; */
+}
+
+.boody {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 30%;
+  margin-top: 30px;
+}
+
+.profile-container {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.profile-picture div {
+  background-color: #000000;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.profile-info h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile-info .description {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.links{
+    height: 60px;
+    width: 100%;
+    background-color: #fff;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+</style>
+<body>
+    <div class="boody">
+        <div class="profile-container">
+            <div class="profile-picture">
+                <div></div>
+              <!-- <img src="profile.jpg" alt="Profile Picture"> -->
+            </div>
+            <div class="profile-info">
+              <h1>{{ user.username }}</h1>
+              <p class="description">
+                A passionate web developer with a love for creating clean, user-friendly websites.
+              </p>
+            </div>
+            
+          </div>
+          
+
+    </div>
+    <div class="links">
+        <a href="{% url 'offer_list' %}">Projects</a>
+    </div>
+ 
+</body>
+</html>
+{% endblock %}
